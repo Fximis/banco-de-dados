@@ -1,1 +1,23 @@
 DML(Data Manipulation Language)
+
+INSERT INTO Categoria (id, nome)
+VALUES
+(1,'Bebidas');
+
+ALTER TABLE Categoria add observacao varchar(10);
+ALTER TABLE Categoria DROP COLUMN observacao;
+
+INSERT INTO Categoria (id, nome)
+VALUES
+(2, 'Higiene');
+
+INSERT INTO Categoria (nome,id)
+VALUES
+('Alimento', 3);
+
+INSERT INTO categoria (nome)
+VALUES
+('Limpeza');
+
+SELECT * FROM categoria
+ORDER BY id asc
