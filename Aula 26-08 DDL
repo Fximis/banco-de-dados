@@ -1,0 +1,125 @@
+DDL (Data Definition Language)
+
+CREATE DATABASE ECOMMERCE;
+USE ECOMMERCE;
+
+CREATE TABLE CATEGORIA
+(id  int AUTO_INCREMENT PRIMARY KEY,
+ nome VARCHAR(100) NOT NULL);
+
+
+CREATE TABLE FORNECEDOR (
+  id int,
+  nome varchar(100) not null,
+  cnpj varchar(18),
+  ativo TINYINT DEFAULT 1);
+
+
+CREATE TABLE PRODUTO (
+  id int  NOT NULL,
+  nome varchar(50) NOT NULL,
+  preco decimal(12,2) NOT NULL,
+  estoque int DEFAULT 0, 
+  categoria_id int,
+  fornecedor_id int);
+
+
+CREATE TABLE CLIENTE(
+   id int NOT NULL,
+   nome varchar(50) NOT NULL,
+   email varchar(150),
+   status varchar(12) DEFAULT 'Ativo',
+   data_cadastro DATETIME DEFAULT NOW()
+);
+
+
+CREATE TABLE PEDIDO (
+id int not null,
+cliente_id int NOT NULL,
+data_pedido DATE,
+total DECIMAL(10,2) DEFAULT 0,
+status VARCHAR(20));
+
+CREATE TABLE ITEMPEDIDO (
+pedido_id int NOT NULL,
+produto_id int NOT NULL,
+quantidade int NOT NULL,
+preco_unitario decimal(7,2) NOT NULL);
+
+ALTER TABLE FORNECEDOR ADD CONSTRAINT fornecedor_pk PRIMARY KEY(id);
+
+ALTER TABLE PRODUTO ADD CONSTRAINT produto_pk PRIMARY KEY (id);
+
+ALTER TABLE CLIENTE ADD CONSTRAINT cliente_pk 
+PRIMARY KEY (id);
+
+ALTER TABLE CATEGORIA 
+ADD CONSTRAINT categoria_nome_uq UNIQUE (nome);
+
+ALTER TABLE FORNECEDOR ADD CONSTRAINT
+fornecedor_cnpj_uq UNIQUE (cnpj);
+
+ALTER TABLE FORNECEDOR ADD CONSTRAINT
+fornecedor_ativo_ck CHECK (ativo IN (0,1));
+
+ALTER TABLE PRODUTO ADD CONSTRAINT
+produto_preco_ck CHECK (preco > 0);
+
+ALTER TABLE PRODUTO ADD CONSTRAINT
+produto_estoque_ck CHECK (estoque >=0);
+
+ALTER TABLE PRODUTO ADD CONSTRAINT
+categoria_produto_fk FOREIGN KEY (categoria_id)
+REFERENCES Categoria(id);
+
+ALTER TABLE PRODUTO ADD CONSTRAINT
+fornecedor_produto_fk FOREIGN KEY (fornecedor_id)
+REFERENCES Fornecedor(id);
+
+ALTER TABLE CLIENTE ADD CONSTRAINT
+cliente_email_uq UNIQUE (email);
+
+ALTER TABLE CLIENTE ADD CONSTRAINT
+cliente_status_ck CHECK (status IN ('Ativo','Inativo'));
+
+ALTER TABLE PEDIDO ADD CONSTRAINT
+pedido_pk PRIMARY KEY (id);
+
+ALTER TABLE PEDIDO
+MODIFY COLUMN status varchar(15) default 'Em Andamento';
+
+ALTER TABLE PEDIDO ADD CONSTRAINT
+pedido_status_ck CHECK (status IN ('Em Andamento', 'Cancelado', 'Concluido'));
+
+ALTER TABLE PEDIDO ADD CONSTRAINT
+cliente_pedido_fk FOREIGN KEY (cliente_id)
+REFERENCES Cliente(id);
+
+ALTER TABLE ITEMPEDIDO ADD CONSTRAINT
+itempedido_pk PRIMARY KEY (pedido_id, produto_id);
+
+ALTER TABLE ITEMPEDIDO ADD CONSTRAINT
+pedido_itempedido_fk FOREIGN KEY (pedido_id)
+REFERENCES Pedido(id);
+
+ALTER TABLE ITEMPEDIDO ADD CONSTRAINT
+produto_itempedido_fk FOREIGN KEY (produto_id)
+REFERENCES Produto(id);
+
+ALTER TABLE ITEMPEDIDO ADD CONSTRAINT
+itempedido_quantidade_ck CHECK (quantidade > 0);
+
+ALTER TABLE ITEMPEDIDO ADD CONSTRAINT
+itempedido_preco_unitario_ck CHECK (preco_unitario > 0);
+
+
+------------------
+
+
+
+
+
+
+
+
+
