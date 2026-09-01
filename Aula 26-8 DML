@@ -21,3 +21,91 @@ VALUES
 
 SELECT * FROM categoria
 ORDER BY id asc
+
+------------
+Versão 2 - set.
+
+-- DML
+-- CRUD -> CREATE, READ, UPDATE, DELETE
+-- CREATE -> INSTERT INTO
+-- SINTAXXE -> INSERT INTO "nometabela" <(colunas)> VALUES  (valores)
+
+use ecommerce;
+
+-- READ -> SELECT
+-- SELECT * | nomecolunas FRO nometabela
+
+-- select * from categoria;
+-- select nome from categoria;
+-- select idcategoria codigo_categoria, nome as nome_categoria
+-- from categoria;
+
+select * from produto;
+select idcategoria novo_nome
+from categoria;
+
+insert into categoria (nome) values ('Higiene');
+insert into categoria (nome) values ('Eletronicos');
+insert into categoria (nome) values ('Vestuario');
+
+insert into produto (idproduto, nome, preco_unitario, estoque, categoria_id) values (1, 'Sabonete', 5.40, 20, 1);
+insert into produto (idproduto, nome, preco_unitario, estoque, categoria_id) values (2, 'Shampoo', 7.20, 30, 1);
+insert into produto (idproduto, nome, preco_unitario, estoque, categoria_id) values (3, 'Impressora', 600.50, 10, 2);
+insert into produto (idproduto, nome, preco_unitario, estoque, categoria_id) values (4, 'Mouse', 30, 40, 2);
+insert into produto (idproduto, nome, preco_unitario, estoque, categoria_id) values (5, 'Camiseta', 20, 50.99, 3);
+
+select * from produto;
+
+-- SELECT COM OPERADORES DE COMPARAÇÃO
+-- (= > >= < <= !=) <>
+
+-- WHERE COLUNA CONDICAO VALOR
+SELECT IDPRODUTO CODPRODUTO,
+	nome	nomeproduto
+from produto
+where idproduto =1;
+
+SELECT idproduto codproduto,
+	nome	nomeproduto,
+    preco_unitario valor_produto
+from produto
+where preco_unitario > 50.00;
+
+-- OPERADORES CONDICIONAIS
+-- AND, OR, NOT 
+
+-- PRECO_UNITARIO MAIOR QUE 50 OU ESTOQUE MAIOR QUE 10 
+
+SELECT * FROM PRODUTO
+WHERE preco_unitario > 50 OR estoque > 10;
+
+SELECT * FROM PRODUTO
+WHERE estoque >= 10 and estoque <= 20;
+
+SELECT * FROM PRODUTO
+WHERE NOT (estoque BETWEEN 1 AND 20);
+-- Pode usar (estoque between 10 and 20);
+
+SELECT * FROM PRODUTO
+WHERE CATEGORIA_ID =1 OR CATEGORIA_ID = 2;
+
+SELECT *FROM PRODUTO
+WHERE CATEGORIA_ID (1,2);
+
+SELECT * FROM PRODUTO
+WHERE CATEGORIA_ID NOT IN (1,2);
+
+-- STRING (FUNÇÕES)
+-- LIKE
+-- INICIA  COM - STRING%
+-- TERMINA COM - %STRING
+-- CONTÉM 	   - %STRING% 	
+
+SELECT * FROM PRODUTO
+WHERE NOME LIKE 'S%';
+
+SELECT * FROM PRODUTO
+WHERE NOME LIKE '%a';
+
+SELECT * FROM PRODUTO
+WHERE NOME LIKE '%pre%';
