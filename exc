@@ -1,0 +1,220 @@
+CREATE DATABASE caderno_de_exercicio;
+USE caderno_de_exercicio;
+
+CREATE TABLE departamento(
+	id_departamento int,
+    nome_departamento varchar(50) NOT NULL
+);
+
+CREATE TABLE cargo(
+	id_cargo int,
+    titulo_cargo varchar(60) NOT NULL,
+    salario_base_cargo decimal(10,2) NOT NULL
+);
+
+CREATE TABLE log_acesso(
+	id_log_acesso bigint,
+    ip_usuario_log_acesso varchar(45),
+    data_hora_log_acesso datetime default current_timestamp
+);
+
+CREATE TABLE produto_catalogo(
+	codigo int,
+    descricao text,
+    ativo boolean default true
+);
+
+CREATE TABLE pais (
+	sigla char(2),
+    nome_pais varchar(50) not null
+);
+
+CREATE TABLE evento(
+	id int,
+    nome varchar(100),
+    data_inicio date,
+    data_fim date
+);
+
+CREATE TABLE avaliacao (
+	id int,
+    nota float,
+    comentario varchar(255)
+);
+
+CREATE TABLE parametro_sistema(
+	chave varchar(30) not null,
+    valor varchar(200)
+);
+
+CREATE TABLE endereco_entrega (
+	id int,
+    logradouro varchar(100) not null,
+    numero varchar(10),
+    cep char(8)
+);
+
+CREATE TABLE historico_preco (
+	id_produto int,
+    data_alteracao timestamp default current_timestamp,
+    preco_anterior decimal(10,2)
+);
+
+CREATE TABLE usuario_temp(
+	id int,
+    nome varchar(50),
+    tentativas_login int default 0
+);
+
+CREATE TABLE anexo_documento (
+	id int,
+    nome_arquivo varchar(120) not null,
+    conteudo_binario blob
+);
+
+CREATE TABLE sensor_leitura (
+	id_sensor int,
+    temperatura decimal(5,2),
+	umidade decimal(5,2)
+);
+
+CREATE TABLE cupom_desconto (
+	codigo varchar(20) not null,
+    percentual decimal(4,2) not null
+);
+
+CREATE TABLE notificao (
+	id int,
+    mensagem varchar(200) not null,
+    lida boolean default false,
+    criado_em datetime default now()
+);
+
+CREATE TABLE turma_escolar (
+	ano_letivo smallint,
+    serie varchar(10),
+    letra_sala char(1)
+);
+
+CREATE TABLE transacao_cartao (
+	id bigint,
+    nsu varchar(30),
+    valor_liquido decimal(12,2)
+);
+
+CREATE TABLE cliente_pf (
+	id int,
+	nome_completo varchar(100) not null,
+	data_nascimento date not null
+);
+
+CREATE TABLE configuracao_email(
+	servidor_smtp varchar(80) not null,
+	porta smallint default 587
+);
+
+CREATE TABLE reserva_hotel(
+	num_reserva int,
+    checkin date not null,
+    num_hospedes int default 1
+);
+
+-- CHAVES PRIMARIAS - BLOCO 2
+
+CREATE TABLE categoria( -- modo 1
+	id_categoria int auto_increment PRIMARY KEY,
+    nome varchar(40) not null
+);
+
+CREATE TABLE marca ( -- modo 2
+	id_marca int auto_increment,
+    descricao varchar(50),
+    constraint pk_marca PRIMARY KEY (id_marca)
+);
+
+CREATE TABLE fornecedor(
+	id_fornecedor int,
+    razao_social varchar(100) not null
+);
+
+ALTER TABLE fornecedor ADD CONSTRAINT pk_fornecedor PRIMARY KEY(id_fornecedor);
+
+-- TABELA ASSOCIATIVA
+CREATE TABLE aluno_disciplina(
+	ra int,
+    cod_disciplina int,
+    constraint pk_aluno_disc PRIMARY KEY (ra,cod_disciplina)
+);
+
+CREATE TABLE item_pedido(
+	id_pedido int,
+    num_item int,
+    quantidade int not null,
+    preco_unitario decimal(10,2) not null,
+    constraint pk_id_pedido_num_item PRIMARY KEY (id_pedido, num_item)
+);
+
+CREATE TABLE usuario_rede(
+	UUID char(36) PRIMARY KEY,
+    login varchar(30) not null
+);
+
+CREATE TABLE unidade_federativa(
+	uf char(2) PRIMARY KEY,
+    nome_estado varchar(30) not null
+);
+
+CREATE TABLE medico(
+	crm int,
+    uf_crm char(2),
+    nome varchar(80),
+    constraint pk_crm_uf primary key (crm, uf_crm)
+);
+
+CREATE TABLE permissao(
+	id_permissao int auto_increment PRIMARY KEY,
+    nome_chave varchar(40) not null
+);
+
+CREATE TABLE prontuario(
+	numero_prontuario int auto_increment PRIMARY KEY,
+    data_criacao date not null
+);
+
+CREATE TABLE grade_horario(
+	id_turma int,
+    dia_semana tinyint,
+    hora_inicio time,
+    constraint pk_grade_turma PRIMARY KEY (id_turma, dia_semana, hora_inicio)
+);
+
+CREATE TABLE tipo_pagamento(
+	cod_tipo tinyint auto_increment PRIMARY KEY,
+    nome varchar(30) not null
+);
+
+CREATE TABLE modulo_sistema(
+	cod_modulo varchar(10) primary key,
+    descricao varchar(60)
+);
+
+CREATE TABLE historico_cargo(
+	id_funcionario int,
+    id_cargo int,
+    data_promocao date,
+    constraint pk_historico_promocao PRIMARY KEY (id_funcionario, id_cargo, data_promocao)
+);
+
+CREATE TABLE cidade(
+	ibge_codigo int PRIMARY KEY,
+    nome_cidade varchar(60) not null
+);
+
+
+
+
+
+
+
+
+
