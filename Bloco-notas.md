@@ -7,8 +7,10 @@ Glossário
 .updateOne()
 .updateMany()
 .find()
+.insertOne() - criar
 
 
+> Lembrar de quando for criar array, colocar entre chaves []. Ex: competencias:['exemplo1','exemplo2']
 
 
 ## Comando find
@@ -23,7 +25,7 @@ $lt: -> menor que
 $lte: -> menor igual
 $gt:  -> maior 
 $gte: -> maior igual
-%ne: -> diferente de
+$ne: -> diferente de
 
 ### Exemplo de pesquisa + ($eq:)
 db.funcionarios.find({nome: 'Ana Silva'})
