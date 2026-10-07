@@ -1,6 +1,14 @@
-## NOSQL
+# NOSQL
 > pegar e colocar outras regras aqui
 > todo comando começa com **db.** Nome_da_coleção
+
+Glossário
+
+.updateOne()
+.updateMany()
+.find()
+
+
 
 
 ## Comando find
@@ -80,11 +88,55 @@ $mul
 
 db.funcionarios.updateMany({},{$rename: {"habilidades": "competencias"}})
 
+# Aula 07/10 - continuação 
+
+> Set é para trocar o valor. Rename é para trocar um campo
+
+#### Trocando documento Habilidades por Competencias
+
+db.funcionarios.updateMany({},{$rename:{'habilidades':'competencias'}})
+
+### Adicionar e remover um Elemento de um Arrray
+
+$push **adiciona** um elemento dentro de um Array. Com o set, trocaria tudo por um valor só.
+Não há verificação se existem elementos duplicados ou não.
+
+$pull **remove** um elemento dentro de um array
+
+db.funcionarios.updateOne({nome:'Ana Silva'}, {$push:{competencias:'TypeScript'}})
+
+db.funcionarios.updateOne({nome:'Carla Dias'}, {$pull:{competencias:'Jira'}})
+
+### Remover o primeiro ou ultimo elemento de um array
+
+$pop identifica se é o primeiro ou ultimo com 1 ou -1
+
+> O 'ultimo' é o mais recente (quando fez o push, foi pro final)
+
+db.funcionarios.updateOne({'Daniel Farias', {$pop:{competencias:-1}})
+
+
+### Adcionando elemento apenas se não existir
+
+$addToSet verifica se não existe o elemento no array. Se nao existir, adiciona.
+
+db.funcionarios.updateOne({nome:"André Marques"}, {$addToSet:{competencias:"React"}})
+
+### Deletando 
+.deleteOne()
+
+db.funcionario.deleteOne({nome: 'Eduarda Lima'})
 
 
 
 
 
+
+
+
+
+
+---
 ```mermaid
 gantt
     title Exemplo de Cronograma
