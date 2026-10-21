@@ -129,7 +129,18 @@ db.funcionarios.updateOne({nome:"André Marques"}, {$addToSet:{competencias:"Rea
 
 db.funcionario.deleteOne({nome: 'Eduarda Lima'})
 
+## faltei dia 14
 
+## dia 15
+
+procurando 5 maiores em ordem decrescente
+
+db.pokemon.aggregate(
+[
+{$sort: {attack:-1}},
+{$limit: 5}
+]
+)
 
 
 
