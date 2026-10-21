@@ -139,8 +139,84 @@ db.pokemon.aggregate(
 [
 {$sort: {attack:-1}},
 {$limit: 5}
+{sort:{name: 1}}
 ]
 )
+
+#### Projetando - é em binário (1 verdadeiro 0 falso)
+{$project:{_id:0, name:1, attack:1}} //mostra só isso
+
+#### seleção
+
+{$match: {defense: {$ gt:60} 
+             speed:{$lt: 50}
+            }
+    }
+
+#### Novos
+
+##### UNWIND
+'Quebra um array', gerando documentos novos. Só para "transformação". Se tiver 3 documentos, com 2 tipos, ele quebra, ficando mais rapido e facil de manipular.
+
+valores dentro de um array --> usar unwind
+
+{$match: {_id:15}},
+    {$unwind:"$types"}
+  ]
+)
+//procura o id 15, e quebra o array 'types' em documentos. (pq usa "$types" com aspas duplas e s/chave)
+
+
+
+##### $GROUP -- parecido com groupby
+
+"resumir algo.. "quantos pokemons do tipo dark?"
+
+-Sempre que for usar funções de agrupamento, e estão baseadas em alguma informação dentro de um array, o UNWIND DEEVE vir antes para quebrar.
+
+- $Group sempre terá _id. Esse _ID não é do pokemon, é de quem quer agrupar (?) é o "by"
+
+ex: 
+db.campeoes.aggregate([
+      {$group:{_id:"$funcao", qtde_funcoes: // o agrupamento, a coluna que está querendo agrupar e o apelido, respectivamente.
+      {$sum:1}} //nao tem count. por isso o sum
+      }])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
