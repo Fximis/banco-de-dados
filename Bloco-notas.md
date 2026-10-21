@@ -182,9 +182,15 @@ db.campeoes.aggregate([
       {$sum:1}} //nao tem count. por isso o sum
       }])
 
+-sifrao antes da funcao(nome coluna) é para indicar que é um campo. qtde_funcao nao tem sirao, indicando que é um apelido.
 
 
+{$match: {_id:15}},
+    {$unwind:"$types"}
+  ]
+)
 
+####lookup
 
 
 
