@@ -91,7 +91,19 @@ DROP (Exclui a tabela ou o banco inteiro)
     DROP DATABASE meu_banco_de_estudos;
 
 
-
-Bloco 4: Integridade Referencial (FOREIGN KEY) e Ações em
+## QUA
+Bloco 4: Integridade Referencial (FOREIGN KEY) e Ações em 
 Cascata (51 a 65) -- terminar essa lista e começar a fazer exercicios completos.
+
+CREATE TABLE projeto(
+	id_projeto  int AUTO_INCREMENT PRIMARY KEY,
+	nome varchar(50)	
+);
+CREATE TABLE tarefa(
+	id_tarefa int AUTO_INCREMENT PRIMARY KEY,
+    descricao varchar(100),
+    id_projeto int,
+    
+   CONSTRAINT fk_tarefa_projeto FOREIGN KEY (id_projeto) REFERENCES projeto(id_projeto)
+);
 
