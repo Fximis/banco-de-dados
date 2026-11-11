@@ -131,7 +131,7 @@ db.createCollection("alunosv4",{
       required:["nome","email","idade","ativo"],
       properties:{
         nome:{bsonType:"string"},
-        email:{bsonType:"string"},
+        email:{bsonType:"string"}, //é possivel estabelecer mais de um tipo. "string", "int"... 
         idade:{bsonType:"int", minimum: 18},
         ativo:{bsonType:"bool"},
         status:{
@@ -151,4 +151,94 @@ Mongo
   idade: {bsonType: "int", minimum: 18},
   nota: {bsonType: "double", minimum: 0, maximum: 10}
 
-  
+## V5 - Unique (vira índice unico) -- Unicidade não é regra de JSON Schema, é regra de indice.
+
+Relacional
+email VARCHAR(120) Unique NOT NULL
+
+MONGODB
+A Unique é feita "fora".
+1. required garante que o campo exista
+2. bsonType garante que seja string
+3. Índice unique impede repetição
+
+db.alunos.createIndex({email:1},{unique:true}) // o 1 indica crescente ou decrescente
+
+## v6 arrays simples
+
+disciplinas:{
+  bsonType:"array",
+  minItems:1} // o minItems é obrigatorio
+
+  //documento válido
+  { nome: "Ana",
+    email: "ana@teste.com,
+    idade: 22,
+    ativo: true,
+    disciplinas: ["Banco de Dados", "NoSQL"]
+  }
+
+db.createCollection("alunosv6",{
+  validator:{
+    $jsonSchema:{
+      bsonType:"object",
+      required:["nome","email","idade","ativo"],
+      properties:{
+        nome:{bsonType:"string"},
+        email:{bsonType:"string"},
+        idade:{bsonType:"int", minimum: 18},
+        ativo:{bsonType:"bool"},
+        status:{
+        	enum:["ativo","inativo","trancado"]},
+        nota:{bsonType: "double", minimum: 0, maximum: 10},
+        disciplinas:{
+          bsonType: "array",
+          minItems: 1}
+        }
+      }
+    }
+  })
+  >  { nome: "Ana", email: "ana@teste.com", idade: 22, ativo: true, disciplinas: ["Banco de Dados", "NoSQL"] } 
+
+## v7 subdocumento simples
+- É um objeto dentro do documento principal. Ele pode ter seus próprios campos obrigatórios. É útil para endereço, contato, perfil, configuração e medidas.
+
+endereço:{
+  bsonType:"object",
+  required: ["cidade", "uf"],
+  properties:{
+    cidade: {bsonType: "string"}
+    uf: {bsonType:"string"}
+  }
+}
+-- fica dentro de properties, nesse caso (nao é pra separar.. Ou seja, um documento de um documento com regras específicas).
+//tipo objeto, basicamente voce tem um novo documento dentro. Diferente do array. 
+
+db.createCollection("alunosv8",{
+  validator:{
+    $jsonSchema:{
+      bsonType:"object",
+      required:["nome","email","idade","ativo"],
+      properties:{
+        nome:{bsonType:"string"},
+        email:{bsonType:"string"},
+        idade:{bsonType:"int", minimum: 18},
+        ativo:{bsonType:"bool"},
+        status:{
+        	enum:["ativo","inativo","trancado"]},
+        nota:{bsonType: "double", minimum: 0, maximum: 10},
+        disciplinas:{
+          bsonType: "array",
+          minItems: 1},
+        endereço:{
+  				bsonType:"object",
+  				required: ["cidade", "uf"],
+  				properties:{
+    				cidade: {bsonType: "string"},
+    				uf: {bsonType:"string"}}}
+        }
+      }
+    }
+  })
+
+Para fazer o insert precisa de nomedocumento.nomecoluna (endereco.cidade e endereco.uf)
