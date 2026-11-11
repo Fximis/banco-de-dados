@@ -63,5 +63,92 @@ db.createCollection("alunov5",{
   }
 })
 ´´´
+--------
+# DIA 11 - QUA
+## v1
+db.createCollection("alunosv1",{
+  validator:{
+    $jsonSchema:{
+      bsonType:"object",
+      required:["nome","email","idade","ativo"],
+      }
+    }
+  }
+})
 
+## v2 
+db.createCollection("alunos",{
+  validator:{
+    $jsonSchema:{
+      bsonType:"object",
+      required:["nome","email","idade","ativo"],
+      properties:{
+        nome:{bsonType:"String"},
+        email:{ bsonType:"String"},
+        idade:{bson:"int"},
+        ativo:{bsonType:"bool"}
+      }
+    }
+  }
+})
 
+> db.alunosv2.insertOne({nome:"Joao", email:"teste@teste.com", idade:14, ativo: true})
+-- Essa questão de properties eu nao tinha conseguido fazer ontem com {bsonType} nem min e max (v4)
+
+## v3
+db.createCollection("alunosv3",{
+  validator:{
+    $jsonSchema:{
+      bsonType:"object",
+      required:["nome","email","idade","ativo"],
+      properties:{
+        nome:{bsonType:"string"},
+        email:{bsonType:"string"},
+        idade:{bsonType:"int"},
+        ativo:{bsonType:"bool"},
+        status:{
+        	enum:["ativo","inativo","trancado"]}
+      }
+    }
+  }
+})
+
+> db.alunosv3.insertOne({nome:"Lia", email:"lia@teste.com", idade: 20, ativo: true, status:"ativo"})
+
+relacional
+ check (status in ('ativo','inativo','trancado'))
+MongoDB
+  status{
+    enum:{"ativo","inativo","trancado"]
+  }
+
+## v4
+
+db.createCollection("alunosv4",{
+  validator:{
+    $jsonSchema:{
+      bsonType:"object",
+      required:["nome","email","idade","ativo"],
+      properties:{
+        nome:{bsonType:"string"},
+        email:{bsonType:"string"},
+        idade:{bsonType:"int", minimum: 18},
+        ativo:{bsonType:"bool"},
+        status:{
+        	enum:["ativo","inativo","trancado"]},
+        nota:{bsonType: "double", minimum: 0, maximum: 10}
+      }
+    }
+  }
+})
+
+> db.alunosv4.insertOne({nome:"Joao",email:"teste@teste.com", idade:18, ativo: true, nota: 1.10, status: "trancado"})
+
+Relacional
+  check(idade>=18)
+  check (nota >=0 and nota <=10)
+Mongo
+  idade: {bsonType: "int", minimum: 18},
+  nota: {bsonType: "double", minimum: 0, maximum: 10}
+
+  
