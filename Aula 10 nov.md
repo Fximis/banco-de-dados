@@ -5,7 +5,9 @@
 https://querydrill.dev/practice/#several-accumulators --> site para treinar mongodb
 https://learn.mongodb.com/
 
-
+---
+${$inc: {preco: 10}} --> incrementa +10
+---
 #### Anatomia de um validador.
 Usa-se db.createCollecton com o operador $jsonSchema.
 
