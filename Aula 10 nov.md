@@ -243,4 +243,8 @@ db.createCollection("alunosv8",{
     }
   })
 
-Para fazer o insert precisa de nomedocumento.nomecoluna (endereco.cidade e endereco.uf)
+Para fazer o insert precisa de nomedocumento.nomecoluna (endereco.cidade e endereco.uf) - e set eu acho
+
+- Buscas e quaisquer outras coisas de subdocumentos precisa de dotação. ex: ({"regiao.sigla": "br"})
+
+
