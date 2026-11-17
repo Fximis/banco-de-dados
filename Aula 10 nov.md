@@ -247,4 +247,23 @@ Para fazer o insert precisa de nomedocumento.nomecoluna (endereco.cidade e ender
 
 - Buscas e quaisquer outras coisas de subdocumentos precisa de dotação. ex: ({"regiao.sigla": "br"})
 
+-- 
+$set - troca valor {$set:{preco: 10} - vira 10
+$inc - incrementa {$inc: {preco: 10}} ou {$inc: {preco: -10}}. - aumenta 10 ou tira 10
+$unset - remove o campo
 
+arrays
+
+$push - adiciona no fim 
+$addToSet - adiciona só se nao existir 
+$pop -  1 tira do fim, -1 do inicio
+$pull - tira por valor
+
+ex: tags{["indie","3D"]}
+
+$push 'promo' -> ["indie", "promo]
+$addToSet 'indie -> sem mudanca
+$pull '3D' -> indie [... pdf]
+
+Se diz 'por valor' = $pull
+Se diz "sem duplicar" = addToSet
