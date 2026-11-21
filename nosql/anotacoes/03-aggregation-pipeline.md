@@ -160,7 +160,7 @@ db.clientes.aggregate([
 
 ## 4. Explosão de Arrays: `$unwind`
 
-> **Correção conceitual importante:** Ao contrário do que foi anotado em aula (*"quebra ficando mais rápido"*), o `$unwind` **NÃO torna a consulta mais rápida** — ele **expande (desnormaliza)** 1 documento com `N` elementos no array em `N` documentos na memória do pipeline! Por isso, filtre com `$match` **antes** do `$unwind` sempre que possível.
+> **expande (desnormaliza)** 1 documento com `N` elementos no array em `N` documentos na memória do pipeline! Por isso, filtre com `$match` **antes** do `$unwind` sempre que possível.
 
 ### Exemplo Real Corrigido (`Pokemon-Clean.json`, `_id: 15` = Beedrill)
 
