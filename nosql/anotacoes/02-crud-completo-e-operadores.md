@@ -367,7 +367,7 @@ Um **subdocumento** é um objeto `{ ... }` aninhado dentro de outro documento. E
 
 ### 9.1 Regra Crítica: `insertOne` vs `find` / `update`
 
-> **Erro grave corrigido da aula:**
+
 > - **Na inserção (`insertOne` / `insertMany`)**, você envia o **objeto aninhado** normal! **Não** se usa *dot notation* com chaves `"endereco.cidade"` no `insertOne`.
 > - **Na consulta (`find`) e na atualização (`$set`, `$unset`)**, você usa **notação de ponto entre aspas** (`"endereco.cidade"`) para navegar até o campo interno.
 
